@@ -1,0 +1,75 @@
+---
+services:
+    unifi-controller:
+        container_name: unifi-controller
+        mac_address: 02:42:ac:11:00:02
+        environment:
+            - TZ=America/Chicago
+            - MEM_LIMIT=1024
+            - MEM_STARTUP=1024
+            - PUID=1000
+            - PGID=1000
+        volumes:
+            - /mnt/docker_zvol/unifi/config:/config
+        cap_add:
+            - AUDIT_WRITE
+            - CHOWN
+            - DAC_OVERRIDE
+            - FOWNER
+            - FSETID
+            - KILL
+            - MKNOD
+            - NET_BIND_SERVICE
+            - NET_RAW
+            - SETFCAP
+            - SETGID
+            - SETPCAP
+            - SETUID
+            - SYS_CHROOT
+        cap_drop:
+            - AUDIT_CONTROL
+            - BLOCK_SUSPEND
+            - DAC_READ_SEARCH
+            - IPC_LOCK
+            - IPC_OWNER
+            - LEASE
+            - LINUX_IMMUTABLE
+            - MAC_ADMIN
+            - MAC_OVERRIDE
+            - NET_ADMIN
+            - NET_BROADCAST
+            - SYSLOG
+            - SYS_ADMIN
+            - SYS_BOOT
+            - SYS_MODULE
+            - SYS_NICE
+            - SYS_PACCT
+            - SYS_PTRACE
+            - SYS_RAWIO
+            - SYS_RESOURCE
+            - SYS_TIME
+            - SYS_TTY_CONFIG
+            - WAKE_ALARM
+        network_mode: bridge
+        working_dir: /usr/lib/unifi
+        ports:
+            - 10001:10001/udp
+            - 1900:1900/udp
+            - 3478:3478/udp
+            - 5514:5514/udp
+            - 6789:6789
+            - 8081:8080
+            - 8443:8443
+            - 8843:8843
+        expose:
+            - "8880"
+        restart: unless-stopped
+        labels:
+            - org.opencontainers.image.revision=85e4d1ba40b4c865a69ebb2a1a9972274a3dba63
+            - org.opencontainers.image.version=7.5.187-ls213
+            - org.opencontainers.image.ref.name=85e4d1ba40b4c865a69ebb2a1a9972274a3dba63
+            - org.opencontainers.image.created=2023-10-27T02:30:05+00:00
+            - build_version=Linuxserver.io version:- 7.5.187-ls213 Build-date:-
+              2023-10-27T02:30:05+00:00
+        runtime: runc
+        image: lscr.io/linuxserver/unifi-controller:latest
